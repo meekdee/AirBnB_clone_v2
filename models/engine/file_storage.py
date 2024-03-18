@@ -68,7 +68,7 @@ class FileStorage:
         If obj is equal to None, the method should not do anything
         """
 
-        if obj in None:
+        if obj is None:
             return
         obj_to_del = f"{obj.__class__.__name__}.{obj.id}"
 
