@@ -115,12 +115,13 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        arg_list = []
         try:
             if not args:
                 raise SyntaxError()
             arg_list = arg.split(" ")
             kw = {}
-            for aeg in arglist[1:]:
+            for arg in arglist[1:]:
                 arg_splited = arg.split("=")
                 arg_splited[1] = eval(arg_splited[1])
                 if type(arg_splited[1]) is str:
