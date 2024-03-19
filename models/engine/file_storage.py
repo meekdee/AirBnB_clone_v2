@@ -59,14 +59,6 @@ class FileStorage:
                         self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
-<<<<<<< HEAD
-
-    def delete(self, obj=None):
-        """Deletes obj from storage if it exists"""
-        if obj is not None:
-            key = "{}.{}".format(obj.__class__.name__), obj.id
-            FileStorage.__objects.pop(key, None)
-=======
         except json.decoder.JSONDecodeError:
             pass
 
@@ -86,4 +78,3 @@ class FileStorage:
             pass
         except KeyboardInterrupt:
             pass
->>>>>>> 412062e12d3b22bc48adb7f8cec503626da38a46
