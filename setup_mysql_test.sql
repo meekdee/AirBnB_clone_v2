@@ -2,7 +2,7 @@
 CREATE  DATABASE IF NOT EXISTS hbnb_test_db;
 
 -- Create the user if it doesn't exist and set the password
-CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
+CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';
 
 -- Grant all privileges on the database hbnb_test_db to the user hbnb_test
 GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_test'@'localhost';
@@ -12,4 +12,4 @@ GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_test'@'localhost';
 GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost';
 
 -- Grant necessary privileges to execute SHOW DATABASES command
-GRANT SHOW DATABASES ON *.* TO 'hbnb_test'@'localhost'
+GRANT SHOW DATABASES ON *.* TO 'hbnb_test'@'localhost';
