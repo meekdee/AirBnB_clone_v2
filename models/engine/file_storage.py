@@ -22,14 +22,17 @@ class FileStorage:
           Returns:
             dict: A dictionary containing objects in storage.
         """
+        dic = {}
         if cls:
-            if isinstance(cls, str):
-                cls = globals().get(cls)
-            if cls and issubclass(cls, BaseModel):
-                cls_dict = {k : v for k,
-                        v in self.__objects.items() if isinstance(v, cls)}
-                return cls_dict
-        return FileStorage.__objects
+            dictionary = self.__objects
+            for key in dictionary:
+                partition = key.replace('.', ' ')
+                partition = shlex.split(partition)
+                if (partition[0] == cls.__name__):
+                    dic[key] = self.__objects[key]
+            return (dic)
+        else:
+            return self.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -57,25 +60,20 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
         except json.decoder.JSONDecodeError:
             pass
 
     def delete(self, obj=None):
-        """ 
-        To delete obj from __objects if it’s inside
+        """ To delete obj from __objects if it’s inside
         If obj is equal to None, the method should not do anything
         """
-
-        if obj is None:
-            """Delete an existing element
-            """
-            if obj is not None:
-                key = "{}.{}".format(type(obj).__name__, obj.id)
-                if key in self.__objects[key]:
-                    del self.__objects[key]
+        if obj is not None:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            if key in self.__objects:
+                del self.__objects[key]
 
     def close(self):
         """ Calls reload()"""
