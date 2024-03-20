@@ -72,10 +72,11 @@ class FileStorage:
         if obj is None:
             """Delete an existing element
             """
-            if obj:
+            if obj is not None:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
-                del self.__objects[key]
+                if key in self.__objects[key]:
+                    del self.__objects[key]
 
     def close(self):
-        """Calls reload()"""
+        """ Calls reload()"""
         self.reload()
