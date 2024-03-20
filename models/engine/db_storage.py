@@ -1,11 +1,15 @@
 #!/usr/bin/python3
-
+"""This module defines the DBStorage class."""
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import BaseModel, Base
 from models.state import State
 from models.city import City
+from models.place import Place
+from models.user import User
+from models.amenity import Amenity
+from models.review import Review
 
 
 class DBStorage:
@@ -26,22 +30,22 @@ class DBStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage."""
-        models_dict = {}
+        objs = {}
+        classes = [State, City, User, Place, Review, Amenity]
         if cls:
-            for obj in self.__session.query(cls).all():
+            if isinstance(cls, str):
+                cls = eval(cls)
+            classes = [cls]
+        for cls in classes:
+            for obj in self.__session.query(cls):
                 key = "{}.{}".format(type(obj).__name__, obj.id)
-                models_dict[key] = obj
-
-        else:
-            for cls in [State, City]:
-                for obj in self.__session.query(cls).all():
-                    key = "{}.{}".format(type(obj).__name__, obj.id)
-                    models_dict[key] = obj
-        return models_dict
+                objs[key] = obj
+        return objs
 
     def new(self, obj):
         """Adds new object to storage session."""
-        self.__session.add(obj)
+        if obj:
+            self.__session.add(obj)
 
     def save(self):
         """Commits all changes of the current database session"""
