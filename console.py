@@ -10,6 +10,8 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models import storage
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,13 +117,12 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        arg_list = []
         try:
             if not args:
                 raise SyntaxError()
-            arg_list = arg.split(" ")
+            arg_list = args.split(" ")
             kw = {}
-            for arg in arglist[1:]:
+            for arg in arg_list[1:]:
                 arg_splited = arg.split("=")
                 arg_splited[1] = eval(arg_splited[1])
                 if type(arg_splited[1]) is str:
@@ -134,6 +135,7 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[arg_list[0]](**kw)
         new_instance.save()
         print(new_instance.id)
+
 
     def help_create(self):
         """ Help information for the create method """
