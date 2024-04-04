@@ -14,8 +14,8 @@ file { '/data/web_static/shared':
   ensure => 'directory',
 }
 
-# Create a symbolic link /data/web_static/current pointing to /data/web_static
-file { 'data/web_static/current':
+# Create a symbolic link /data/web_static/current pointing to /data/web_static/releases
+file { '/data/web_static/current':
   ensure => 'link',
-  target => '/data/web_static/releases/test',
+  target => '/data/web_static/releases',
 }
