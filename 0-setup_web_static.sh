@@ -1,39 +1,27 @@
 #!/usr/bin/env bash
+# script that sets up web servers for the deployment of web_static
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 
-# Install Nginx if not already installed
-if ! command -v nginx &> /dev/null; then
-    sudo apt-get update
-    sudo apt-get -y install nginx
-fi
-
-# Create necessary directories if they don't exist
-sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
-
-# Create fake HTML file for testing
-echo "<html>
+sudo mkdir -p /data/
+sudo mkdir -p /data/web_static/
+sudo mkdir -p /data/web_static/releases/
+sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
+sudo touch /data/web_static/releases/test/index.html
+sudo echo "<html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
+</html>" | sudo tee /data/web_static/releases/test/index.html
 
-# Create symbolic link if it doesn't exist
-if [ ! -e /data/web_static/current ]; then
-    sudo ln -sf /data/web_static/releases/test /data/web_static/current
-fi
+sudo ln -s -f /data/web_static/releases/test/ /data/web_static/current
 
-# Set ownership
-sudo chown -R ubuntu:ubuntu /data
+sudo chown -R ubuntu:ubuntu /data/
 
-# Update Nginx configuration
-sudo sed -i '/root \/var\/www\/html;/ a\
-\
-    location /hbnb_static {\
-        alias /data/web_static/current/;\
-        # If the requested file is not found, return a 404 error\
-        error_page 404 = /404.html;\
-    }' /etc/nginx/sites-available/default
+sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
 
-# Restart Nginx
 sudo service nginx restart
