@@ -31,9 +31,9 @@ def text_var(text):
     return "C {}".format(text.replace("_", " "))
 
 
-@app.route('/python', strict_slashes=False)
+@app.route('/python', defaults={'text', 'is_cool', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def text_var_python(text="is cool"):
+def text_var_python(text):
     """
         function to display text variable, with default "is cool"
     """
