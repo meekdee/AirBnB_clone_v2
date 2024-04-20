@@ -30,15 +30,15 @@ def text_var(text):
     return "C {}".format(text.replace("_", " "))
 
 
-@app.route('/python/<text>', defaults={'text', 'is_cool'}, strict_slashes=False)
-def text_var_python(text):
+@app.route('/python/<text>', strict_slashes=False)
+def text_var_python(text="is cool"):
     """
         function to display text variable, with default "is cool"
     """
     return "Python {}".format(text.replace("_", " "))
 
 
-@app.route('/number/int:n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def var_num(n):
         """
              function to display a variable, but only if an int
