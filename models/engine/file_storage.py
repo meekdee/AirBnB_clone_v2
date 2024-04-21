@@ -7,7 +7,7 @@ from models import base_model, amenity, city, place, review, state, user
 from datetime import datetime
 
 strptime = datetime.strptime
-to_json = base_model.BaseModel.to_json
+"""to_json = base_model.BaseModel.to_json"""
 
 
 class FileStorage:
